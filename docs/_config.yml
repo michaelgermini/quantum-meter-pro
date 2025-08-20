@@ -1,0 +1,75 @@
+title: QuantumMeter Pro
+description: Advanced Laboratory Software for Quantum Measurement Devices
+author: Michael Germini
+email: michael@germini.info
+url: https://michaelgermini.github.io/quantum-meter-pro
+baseurl: "/quantum-meter-pro"
+
+# GitHub Pages settings
+github:
+  repository_url: https://github.com/michaelgermini/quantum-meter-pro
+  repository_name: quantum-meter-pro
+  username: michaelgermini
+
+# Theme settings
+theme: jekyll-theme-cayman
+show_downloads: true
+
+# Navigation
+nav:
+  - title: Home
+    url: /
+  - title: Features
+    url: /features
+  - title: Documentation
+    url: /docs
+  - title: Download
+    url: /download
+  - title: Support
+    url: /support
+
+# Social media
+social:
+  github: michaelgermini
+  email: michael@germini.info
+
+# SEO
+keywords:
+  - quantum measurement
+  - laboratory software
+  - physics
+  - scientific instruments
+  - measurement devices
+  - quantum physics
+  - electrical measurements
+  - data visualization
+  - real-time monitoring
+  - ai analysis
+  - streamlit
+  - flask
+  - pyqt6
+  - python
+  - research tools
+  - quantum technology
+  - precision measurement
+  - nanoampere
+  - microvolt
+  - resistance measurement
+  - temperature monitoring
+  - data analysis
+  - statistical analysis
+  - anomaly detection
+  - laboratory automation
+  - scientific computing
+  - quantum resistance
+  - quantum hall effect
+  - measurement standards
+  - calibration
+  - scientific software
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
