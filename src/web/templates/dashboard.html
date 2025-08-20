@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumMeter Pro - Web Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .control-panel {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .status-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .status-connected {
+            background-color: #4CAF50;
+            box-shadow: 0 0 10px #4CAF50;
+        }
+
+        .status-disconnected {
+            background-color: #f44336;
+            box-shadow: 0 0 10px #f44336;
+        }
+
+        .status-measuring {
+            background-color: #ff9800;
+            box-shadow: 0 0 10px #ff9800;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+        }
+
+        .btn-warning {
+            background: linear-gradient(45deg, #ff9800, #f57c00);
+        }
+
+        .charts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .chart-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            height: 300px;
+        }
+
+        .chart-title {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .stat-description {
+            font-size: 0.8em;
+            opacity: 0.6;
+            margin-top: 3px;
+            font-style: italic;
+        }
+
+        .data-info-panel {
+            margin-bottom: 20px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-card h3 {
+            margin-bottom: 15px;
+            color: #4CAF50;
+            font-size: 1.2em;
+        }
+
+        .info-content {
+            display: grid;
+            gap: 10px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #ffffff;
+            min-width: 200px;
+        }
+
+        .info-value {
+            color: #4CAF50;
+            font-family: 'Courier New', monospace;
+            text-align: right;
+        }
+
+        .quantum-info-panel {
+            margin-bottom: 20px;
+        }
+
+        .info-section {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .info-section h4 {
+            color: #4CAF50;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .info-section p {
+            margin: 0;
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+
+        .ai-analysis {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .ai-title {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #4CAF50;
+        }
+
+        .ai-content {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 QuantumMeter Pro</h1>
+            <p>Advanced Laboratory Software for Quantum Measurement Devices</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="control-panel">
+                <h2>🎛️ Control Panel</h2>
+                
+                <div class="status-card">
+                    <h3>📊 Device Status</h3>
+                    <p>
+                        <span id="connection-status" class="status-indicator status-disconnected"></span>
+                        <span id="connection-text">Disconnected</span>
+                    </p>
+                    <p>
+                        <span id="measurement-status" class="status-indicator status-disconnected"></span>
+                        <span id="measurement-text">Not Measuring</span>
+                    </p>
+                    <p>Data Points: <span id="data-points">0</span></p>
+                    <p>Last Update: <span id="last-update">Never</span></p>
+                </div>
+
+                <div class="status-card">
+                    <h3>🔌 Device Control</h3>
+                    <button id="connect-btn" class="btn">Connect Device</button>
+                    <button id="disconnect-btn" class="btn btn-danger" disabled>Disconnect</button>
+                </div>
+
+                <div class="status-card">
+                    <h3>📈 Measurement Control</h3>
+                    <button id="start-btn" class="btn" disabled>Start Measurement</button>
+                    <button id="stop-btn" class="btn btn-warning" disabled>Stop Measurement</button>
+                </div>
+
+                <div class="status-card">
+                    <h3>📊 Data Export</h3>
+                    <button id="export-btn" class="btn">Export CSV</button>
+                    <button id="ai-analysis-btn" class="btn">AI Analysis</button>
+                </div>
+
+                <div class="status-card">
+                    <h3>📁 Data Import</h3>
+                    <button id="load-sample-btn" class="btn">Load Sample Data</button>
+                    <input type="file" id="csv-file-input" accept=".csv" style="display: none;">
+                    <button id="load-csv-btn" class="btn">Load CSV File</button>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-card">
+                    <div class="chart-title">⚡ Current (A)</div>
+                    <canvas id="currentChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-title">🔋 Voltage (V)</div>
+                    <canvas id="voltageChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-title">🔌 Resistance (Ω)</div>
+                    <canvas id="resistanceChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-title">🌡️ Temperature (°C)</div>
+                    <canvas id="temperatureChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="current-mean">0.00</div>
+                <div class="stat-label">Current Mean (A)</div>
+                <div class="stat-description">Average current measured in nanoamperes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="voltage-mean">0.00</div>
+                <div class="stat-label">Voltage Mean (V)</div>
+                <div class="stat-description">Average voltage with microvolt precision</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="resistance-mean">0.00</div>
+                <div class="stat-label">Resistance Mean (Ω)</div>
+                <div class="stat-description">Calculated resistance in megohms</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="quality-score">0.00</div>
+                <div class="stat-label">Quality Score</div>
+                <div class="stat-description">Measurement quality score (0-100%)</div>
+            </div>
+        </div>
+
+        <div class="data-info-panel">
+            <div class="info-card">
+                <h3>📊 Loaded Data Information</h3>
+                <div class="info-content">
+                    <div class="info-row">
+                        <span class="info-label">Data Source:</span>
+                        <span class="info-value" id="data-source">Sample CSV File</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Measurement Period:</span>
+                        <span class="info-value" id="measurement-period">August 20, 2024, 22:00:00 - 22:00:49</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Number of Points:</span>
+                        <span class="info-value" id="data-points-count">50 measurements</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Sampling Frequency:</span>
+                        <span class="info-value">1 Hz (1 measurement per second)</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Measurement Type:</span>
+                        <span class="info-value">Quantum resistance bridge simulation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ai-analysis">
+            <div class="ai-title">🤖 AI Analysis</div>
+            <div id="ai-content" class="ai-content">
+                Waiting for data...
+            </div>
+        </div>
+
+        <div class="quantum-info-panel">
+            <div class="info-card">
+                <h3>🔬 Quantum Measurement Explanation</h3>
+                <div class="info-content">
+                    <div class="info-section">
+                        <h4>⚡ Current</h4>
+                        <p>Measured in nanoamperes (nA) - 1e-9 amperes. This extreme precision is necessary for quantum measurements where currents are very weak.</p>
+                    </div>
+                    <div class="info-section">
+                        <h4>🔋 Voltage</h4>
+                        <p>Measured with microvolt (μV) precision - 1e-6 volts. Voltage stability is critical for quantum resistance measurements.</p>
+                    </div>
+                    <div class="info-section">
+                        <h4>🔌 Resistance</h4>
+                        <p>Automatically calculated (R = V/I) in megohms (MΩ). Typical values for quantum standards are around 100 MΩ.</p>
+                    </div>
+                    <div class="info-section">
+                        <h4>🌡️ Temperature</h4>
+                        <p>Controlled to ±0.1°C to maintain measurement stability. Quantum standards are sensitive to temperature variations.</p>
+                    </div>
+                    <div class="info-section">
+                        <h4>🎯 Quantum Precision</h4>
+                        <p>These measurements achieve a relative precision of 1e-8 (0.01 ppm), necessary for quantum resistance standards based on the quantum Hall effect.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart configurations with simpler approach
+        const chartConfig = {
+            type: 'line',
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 0
+                },
+                scales: {
+                    x: {
+                        type: 'linear',
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Time (s)',
+                            color: '#ffffff'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#ffffff',
+                            callback: function(value, index, values) {
+                                return value + 's';
+                            }
+                        }
+                    },
+                    y: {
+                        display: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#ffffff'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        };
+
+        // Initialize charts
+        const currentChart = new Chart(
+            document.getElementById('currentChart'),
+            {
+                ...chartConfig,
+                data: {
+                                         datasets: [{
+                         label: 'Current',
+                         data: [],
+                         borderColor: '#4CAF50',
+                         backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                         borderWidth: 2,
+                         fill: true,
+                         tension: 0.1
+                     }]
+                }
+            }
+        );
+
+        const voltageChart = new Chart(
+            document.getElementById('voltageChart'),
+            {
+                ...chartConfig,
+                data: {
+                    datasets: [{
+                        label: 'Voltage',
+                        data: [],
+                        borderColor: '#2196F3',
+                        backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                }
+            }
+        );
+
+        const resistanceChart = new Chart(
+            document.getElementById('resistanceChart'),
+            {
+                ...chartConfig,
+                data: {
+                    datasets: [{
+                        label: 'Resistance',
+                        data: [],
+                        borderColor: '#FF9800',
+                        backgroundColor: 'rgba(255, 152, 0, 0.1)',
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                }
+            }
+        );
+
+        const temperatureChart = new Chart(
+            document.getElementById('temperatureChart'),
+            {
+                ...chartConfig,
+                data: {
+                    datasets: [{
+                        label: 'Temperature',
+                        data: [],
+                        borderColor: '#E91E63',
+                        backgroundColor: 'rgba(233, 30, 99, 0.1)',
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                }
+            }
+        );
+
+        // API functions
+        async function updateStatus() {
+            try {
+                const response = await axios.get('/api/status');
+                const status = response.data;
+                
+                // Update connection status
+                const connectionStatus = document.getElementById('connection-status');
+                const connectionText = document.getElementById('connection-text');
+                if (status.device_connected) {
+                    connectionStatus.className = 'status-indicator status-connected';
+                    connectionText.textContent = 'Connected';
+                } else {
+                    connectionStatus.className = 'status-indicator status-disconnected';
+                    connectionText.textContent = 'Disconnected';
+                }
+
+                // Update measurement status
+                const measurementStatus = document.getElementById('measurement-status');
+                const measurementText = document.getElementById('measurement-text');
+                if (status.measuring) {
+                    measurementStatus.className = 'status-indicator status-measuring';
+                    measurementText.textContent = 'Measuring';
+                } else {
+                    measurementStatus.className = 'status-indicator status-disconnected';
+                    measurementText.textContent = 'Not Measuring';
+                }
+
+                // Update other status info
+                document.getElementById('data-points').textContent = status.data_points;
+                document.getElementById('last-update').textContent = 
+                    status.last_update ? new Date(status.last_update).toLocaleTimeString() : 'Never';
+
+                // Update button states
+                document.getElementById('connect-btn').disabled = status.device_connected;
+                document.getElementById('disconnect-btn').disabled = !status.device_connected;
+                document.getElementById('start-btn').disabled = !status.device_connected || status.measuring;
+                document.getElementById('stop-btn').disabled = !status.measuring;
+
+            } catch (error) {
+                console.error('Error updating status:', error);
+            }
+        }
+
+        async function updateCharts() {
+            try {
+                const response = await axios.get('/api/measurements/current');
+                const data = response.data;
+
+                if (data.error) {
+                    return;
+                }
+
+                // Create time-based data points
+                const timeData = data.timestamp.map((time, index) => ({
+                    x: index, // Use index as x-axis for simplicity
+                    y: data.current[index]
+                }));
+
+                currentChart.data.datasets[0].data = timeData;
+                currentChart.update('none');
+
+                const voltageData = data.timestamp.map((time, index) => ({
+                    x: index,
+                    y: data.voltage[index]
+                }));
+
+                voltageChart.data.datasets[0].data = voltageData;
+                voltageChart.update('none');
+
+                const resistanceData = data.timestamp.map((time, index) => ({
+                    x: index,
+                    y: data.resistance[index]
+                }));
+
+                resistanceChart.data.datasets[0].data = resistanceData;
+                resistanceChart.update('none');
+
+                const temperatureData = data.timestamp.map((time, index) => ({
+                    x: index,
+                    y: data.temperature[index]
+                }));
+
+                temperatureChart.data.datasets[0].data = temperatureData;
+                temperatureChart.update('none');
+
+                // Update statistics
+                if (data.current.length > 0) {
+                    const currentMean = data.current.reduce((a, b) => a + b, 0) / data.current.length;
+                    const voltageMean = data.voltage.reduce((a, b) => a + b, 0) / data.voltage.length;
+                    const resistanceMean = data.resistance.reduce((a, b) => a + b, 0) / data.resistance.length;
+
+                    document.getElementById('current-mean').textContent = currentMean.toExponential(2);
+                    document.getElementById('voltage-mean').textContent = voltageMean.toFixed(6);
+                    document.getElementById('resistance-mean').textContent = resistanceMean.toExponential(2);
+                }
+
+                // Update data information
+                updateDataInfo(data);
+
+            } catch (error) {
+                console.error('Error updating charts:', error);
+            }
+        }
+
+        function updateDataInfo(data) {
+            if (data.timestamp.length > 0) {
+                const startTime = new Date(data.timestamp[0]);
+                const endTime = new Date(data.timestamp[data.timestamp.length - 1]);
+                
+                document.getElementById('data-source').textContent = 'Sample CSV File';
+                document.getElementById('measurement-period').textContent = 
+                    `${startTime.toLocaleDateString()} ${startTime.toLocaleTimeString()} - ${endTime.toLocaleTimeString()}`;
+                document.getElementById('data-points-count').textContent = `${data.timestamp.length} measurements`;
+            }
+        }
+
+        async function performAIAnalysis() {
+            try {
+                const response = await axios.get('/api/ai/analysis');
+                const analysis = response.data;
+
+                if (analysis.error) {
+                    document.getElementById('ai-content').textContent = analysis.error;
+                    return;
+                }
+
+                const aiContent = document.getElementById('ai-content');
+                aiContent.innerHTML = `
+                    <strong>📊 Current Analysis:</strong><br>
+                    • Mean: ${analysis.current.mean.toExponential(2)} A (${(analysis.current.mean * 1e9).toFixed(2)} nA)<br>
+                    • Std Dev: ${analysis.current.std.toExponential(2)} A<br>
+                    • Range: ${analysis.current.min.toExponential(2)} - ${analysis.current.max.toExponential(2)} A<br>
+                    • Stability: ${((1 - analysis.current.std/analysis.current.mean) * 100).toFixed(2)}%<br>
+                    <br>
+                    <strong>🔋 Voltage Analysis:</strong><br>
+                    • Mean: ${analysis.voltage.mean.toFixed(6)} V<br>
+                    • Std Dev: ${analysis.voltage.std.toFixed(6)} V (${(analysis.voltage.std * 1e6).toFixed(2)} μV)<br>
+                    • Range: ${analysis.voltage.min.toFixed(6)} - ${analysis.voltage.max.toFixed(6)} V<br>
+                    • Stability: ${((1 - analysis.voltage.std/analysis.voltage.mean) * 100).toFixed(2)}%<br>
+                    <br>
+                    <strong>⚠️ Anomaly Detection:</strong><br>
+                    • Current anomalies: ${analysis.anomalies.current_anomalies} (3σ rule)<br>
+                    • Voltage anomalies: ${analysis.anomalies.voltage_anomalies} (3σ rule)<br>
+                    <br>
+                    <strong>🎯 Overall Quality Score:</strong> ${(analysis.quality_score * 100).toFixed(1)}%<br>
+                    <em>${analysis.quality_score > 0.95 ? '✅ Excellent' : analysis.quality_score > 0.9 ? '🟡 Good' : '🔴 Needs improvement'}</em>
+                `;
+
+                document.getElementById('quality-score').textContent = (analysis.quality_score * 100).toFixed(1);
+
+            } catch (error) {
+                console.error('Error performing AI analysis:', error);
+                document.getElementById('ai-content').textContent = 'Error performing analysis';
+            }
+        }
+
+        // Event listeners
+        document.getElementById('connect-btn').addEventListener('click', async () => {
+            try {
+                await axios.post('/api/device/connect');
+                updateStatus();
+            } catch (error) {
+                console.error('Error connecting device:', error);
+            }
+        });
+
+        document.getElementById('disconnect-btn').addEventListener('click', async () => {
+            try {
+                await axios.post('/api/device/disconnect');
+                updateStatus();
+            } catch (error) {
+                console.error('Error disconnecting device:', error);
+            }
+        });
+
+        document.getElementById('start-btn').addEventListener('click', async () => {
+            try {
+                await axios.post('/api/measurement/start');
+                updateStatus();
+            } catch (error) {
+                console.error('Error starting measurement:', error);
+            }
+        });
+
+        document.getElementById('stop-btn').addEventListener('click', async () => {
+            try {
+                await axios.post('/api/measurement/stop');
+                updateStatus();
+            } catch (error) {
+                console.error('Error stopping measurement:', error);
+            }
+        });
+
+        document.getElementById('export-btn').addEventListener('click', async () => {
+            try {
+                const response = await axios.get('/api/export/csv');
+                alert(`Data exported successfully!\nFilename: ${response.data.filename}\nData points: ${response.data.data_points}`);
+            } catch (error) {
+                console.error('Error exporting data:', error);
+                alert('Error exporting data');
+            }
+        });
+
+        document.getElementById('ai-analysis-btn').addEventListener('click', performAIAnalysis);
+
+        // Load sample data
+        document.getElementById('load-sample-btn').addEventListener('click', async () => {
+            try {
+                const response = await axios.post('/api/load/sample');
+                alert(`✅ ${response.data.message}`);
+                updateCharts();
+                performAIAnalysis();
+            } catch (error) {
+                console.error('Error loading sample data:', error);
+                alert('❌ Error loading sample data');
+            }
+        });
+
+        // Load CSV file
+        document.getElementById('load-csv-btn').addEventListener('click', () => {
+            document.getElementById('csv-file-input').click();
+        });
+
+        document.getElementById('csv-file-input').addEventListener('change', async (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await axios.post('/api/load/csv', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+                alert(`✅ ${response.data.message}`);
+                updateCharts();
+                performAIAnalysis();
+            } catch (error) {
+                console.error('Error loading CSV file:', error);
+                alert('❌ Error loading CSV file');
+            }
+        });
+
+        // Update intervals
+        setInterval(updateStatus, 2000);
+        setInterval(updateCharts, 1000);
+        setInterval(performAIAnalysis, 10000);
+
+        // Initial updates
+        updateStatus();
+        updateCharts();
+    </script>
+</body>
+</html>

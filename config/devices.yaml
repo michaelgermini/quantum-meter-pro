@@ -1,0 +1,87 @@
+# QuantumMeter Pro - Device Configuration
+
+devices:
+  quantum_device_001:
+    name: "Primary Quantum Meter"
+    type: "quantum_resistance_bridge"
+    description: "High-precision quantum resistance measurement device"
+    connection:
+      type: "serial"
+      port: "COM3"
+      baudrate: 115200
+      timeout: 1.0
+    calibration:
+      reference_resistance: 1e6
+      temperature_coefficient: 2.5e-6
+      calibration_date: "2024-01-15"
+      next_calibration: "2025-01-15"
+    measurement_ranges:
+      current:
+        - 1e-12  # 1 pA
+        - 1e-9   # 1 nA
+        - 1e-6   # 1 μA
+        - 1e-3   # 1 mA
+      voltage:
+        - 1e-3   # 1 mV
+        - 1e-0   # 1 V
+        - 1e3    # 1 kV
+    sampling_rates:
+      - 1    # 1 Hz
+      - 10   # 10 Hz
+      - 100  # 100 Hz
+      - 1000 # 1 kHz
+
+  quantum_device_002:
+    name: "Secondary Quantum Meter"
+    type: "quantum_voltage_standard"
+    description: "Quantum voltage standard for calibration"
+    connection:
+      type: "ethernet"
+      host: "192.168.1.100"
+      port: 502
+    calibration:
+      reference_voltage: 1.018
+      temperature_coefficient: 1.0e-6
+      calibration_date: "2024-02-01"
+      next_calibration: "2025-02-01"
+
+  simulation_device:
+    name: "Simulation Mode"
+    type: "simulation"
+    description: "Simulated quantum measurement device for testing"
+    connection:
+      type: "simulation"
+    calibration:
+      reference_resistance: 1e6
+      temperature_coefficient: 2.5e-6
+    measurement_ranges:
+      current:
+        - 1e-12
+        - 1e-9
+        - 1e-6
+        - 1e-3
+      voltage:
+        - 1e-3
+        - 1e-0
+        - 1e3
+    sampling_rates:
+      - 1
+      - 10
+      - 100
+      - 1000
+
+# Global settings
+global_settings:
+  data_retention_days: 30
+  auto_backup: true
+  backup_interval_hours: 24
+  max_data_points: 10000
+  export_formats:
+    - "csv"
+    - "excel"
+    - "json"
+  ai_analysis:
+    enabled: true
+    anomaly_detection: true
+    error_correction: true
+    quality_assurance: true
