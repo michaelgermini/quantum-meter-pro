@@ -2,7 +2,25 @@
 
 **Advanced Laboratory Software for Quantum Measurement Devices**
 
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/Version-1.0.0-orange.svg)](CHANGELOG.md)
+[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)](.github/workflows/ci.yml)
+
 QuantumMeter Pro is a comprehensive laboratory software solution designed to interface with and control quantum measurement devices. It enables national laboratories and universities to standardize their electrical measurements without multiplying devices.
+
+## 📋 Table of Contents
+
+- [🌟 Features](#-features)
+- [🔬 Technical Specifications](#-technical-specifications)
+- [📊 Audit Report](#-audit-report)
+- [🛠️ Installation](#️-installation)
+- [🎯 Usage](#-usage)
+- [📁 Project Structure](#-project-structure)
+- [🔧 Configuration](#-configuration)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+- [📞 Support](#-support)
 
 ## 🌟 Features
 
@@ -37,6 +55,85 @@ QuantumMeter Pro is a comprehensive laboratory software solution designed to int
 - **Measurement Control**: Start/stop measurements
 - **API Endpoints**: RESTful API for integration
 
+## 🔬 Technical Specifications
+
+### Measurement Precision
+- **Current**: 1 nA base with 0.01% precision
+- **Voltage**: 1 V base with 1 μV precision
+- **Resistance**: Calculated from V/I ratio
+- **Temperature**: 23°C ± 0.1°C controlled
+
+### Supported Devices
+- **Quantum Resistance Bridges**: High-precision resistance measurement
+- **Nanoampere Meters**: Ultra-low current measurement
+- **Voltage Standards**: Calibrated voltage sources
+- **Temperature Controllers**: Environmental monitoring
+
+### Data Formats
+- **CSV**: Comma-separated values with timestamps
+- **Excel**: Multi-sheet format with charts
+- **SQL**: Database export for analysis
+- **JSON**: API data exchange format
+
+## 📊 Audit Report
+
+A comprehensive security and code quality audit has been performed on QuantumMeter Pro. The audit reveals both strengths and areas for improvement.
+
+### 🔍 Key Findings
+
+- **Code Quality**: 177 linting issues identified
+- **Security**: 13 dependency vulnerabilities detected
+- **Type Safety**: 45 type annotation errors
+- **Formatting**: 3 files require reformatting
+
+### 🛡️ Security Status
+
+- **Application Code**: ✅ No high-severity security issues
+- **Dependencies**: ⚠️ 13 vulnerabilities in third-party packages
+- **Critical Issues**: 5 high-severity vulnerabilities requiring immediate attention
+
+### 🔧 Recommended Actions
+
+#### Immediate (High Priority)
+1. **Update Vulnerable Dependencies**:
+   ```bash
+   pip install --upgrade werkzeug>=3.0.6
+   pip install --upgrade jinja2>=3.1.5
+   pip install --upgrade flask>=3.1.1
+   ```
+
+2. **Fix Code Style Issues**:
+   ```bash
+   black .
+   isort .
+   ```
+
+3. **Add Type Annotations**:
+   - Add return type annotations to all functions
+   - Add type hints for variables
+   - Fix mypy configuration
+
+#### Medium Priority
+1. **Remove Unused Imports**
+2. **Fix Line Length Issues**
+3. **Add Comprehensive Tests**
+4. **Implement Security Headers**
+
+#### Low Priority
+1. **Code Documentation**
+2. **Performance Optimization**
+3. **Error Handling Enhancement**
+
+### 📋 Detailed Audit Report
+
+For a complete analysis including:
+- Detailed vulnerability breakdown
+- Code quality metrics
+- Remediation timeline
+- Security recommendations
+
+**📖 [View Full Audit Report](AUDIT_REPORT.md)**
+
 ## 🛠️ Installation
 
 ### Prerequisites
@@ -45,6 +142,7 @@ QuantumMeter Pro is a comprehensive laboratory software solution designed to int
 
 ### Quick Start
 
+#### Option 1: Desktop Application (Local)
 1. **Clone the repository**
    ```bash
    git clone https://github.com/michaelgermini/quantum-meter-pro.git
@@ -61,60 +159,41 @@ QuantumMeter Pro is a comprehensive laboratory software solution designed to int
    python main.py
    ```
 
-4. **Run the web dashboard**
+#### Option 2: Web Dashboard (Local)
+1. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Run the web dashboard**
    ```bash
    python src/web/app.py
    ```
 
-5. **Access the web interface**
+3. **Access the web interface**
    - Open `http://localhost:8080` in your web browser
 
-## 📁 Project Structure
+#### Option 3: Streamlit Version (Cloud-Ready)
+1. **Install Streamlit dependencies**
+   ```bash
+   pip install -r requirements-streamlit.txt
+   ```
 
+2. **Run Streamlit application**
+   ```bash
+   streamlit run streamlit_app.py
+   ```
+
+3. **Access Streamlit interface**
+   - Open `http://localhost:8501` in your web browser
+
+### Development Setup
+
+For development, install additional dependencies:
+
+```bash
+pip install -r requirements-dev.txt
 ```
-QuantumMeter Pro/
-├── main.py                          # Desktop application entry point
-├── requirements.txt                 # Python dependencies
-├── README.md                       # This file
-├── .gitignore                      # Git ignore rules
-├── config/
-│   └── devices.yaml               # Device configuration
-├── data/
-│   └── sample_quantum_data.csv    # Sample measurement data
-└── src/
-    └── web/
-        ├── app.py                 # Flask web application
-        └── templates/
-            └── dashboard.html     # Web dashboard template
-```
-
-## 🔧 Configuration
-
-### Device Configuration (`config/devices.yaml`)
-
-The application supports multiple quantum measurement devices:
-
-```yaml
-devices:
-  quantum_device_001:
-    name: "Primary Quantum Meter"
-    type: "quantum_resistance_bridge"
-    connection:
-      type: "serial"
-      port: "COM3"
-      baudrate: 115200
-    measurement_ranges:
-      current: [1e-12, 1e-9, 1e-6, 1e-3]
-      voltage: [1e-3, 1e-0, 1e3]
-    sampling_rates: [1, 10, 100, 1000]
-```
-
-### Global Settings
-
-- **Data Retention**: Configure how long to keep measurement data
-- **Auto Backup**: Automatic data backup settings
-- **Export Formats**: Supported export file types
-- **AI Analysis**: Enable/disable AI features
 
 ## 🎯 Usage
 
@@ -157,25 +236,66 @@ devices:
    - Check for anomalies and quality scores
    - Monitor measurement stability
 
-## 🔬 Technical Specifications
+## 📁 Project Structure
 
-### Measurement Precision
-- **Current**: 1 nA base with 0.01% precision
-- **Voltage**: 1 V base with 1 μV precision
-- **Resistance**: Calculated from V/I ratio
-- **Temperature**: 23°C ± 0.1°C controlled
+```
+QuantumMeter Pro/
+├── main.py                          # Desktop application entry point
+├── requirements.txt                 # Python dependencies
+├── requirements-dev.txt             # Development dependencies
+├── README.md                       # This file
+├── LICENSE                         # MIT License
+├── CHANGELOG.md                    # Version history
+├── CONTRIBUTING.md                 # Contribution guidelines
+├── .gitignore                      # Git ignore rules
+├── setup.py                        # Package setup
+├── pyproject.toml                  # Modern Python project config
+├── config/
+│   └── devices.yaml               # Device configuration
+├── data/
+│   └── sample_quantum_data.csv    # Sample measurement data
+├── src/
+│   └── web/
+│       ├── app.py                 # Flask web application
+│       └── templates/
+│           └── dashboard.html     # Web dashboard template
+├── .github/
+│   ├── workflows/
+│   │   └── ci.yml                # CI/CD pipeline
+│   ├── ISSUE_TEMPLATE/
+│   │   ├── bug_report.md         # Bug report template
+│   │   └── feature_request.md    # Feature request template
+│   └── PULL_REQUEST_TEMPLATE.md  # PR template
+└── docs/                          # Documentation (future)
+```
 
-### Supported Devices
-- **Quantum Resistance Bridges**: High-precision resistance measurement
-- **Nanoampere Meters**: Ultra-low current measurement
-- **Voltage Standards**: Calibrated voltage sources
-- **Temperature Controllers**: Environmental monitoring
+## 🔧 Configuration
 
-### Data Formats
-- **CSV**: Comma-separated values with timestamps
-- **Excel**: Multi-sheet format with charts
-- **SQL**: Database export for analysis
-- **JSON**: API data exchange format
+### Device Configuration (`config/devices.yaml`)
+
+The application supports multiple quantum measurement devices:
+
+```yaml
+devices:
+  quantum_device_001:
+    name: "Primary Quantum Meter"
+    type: "quantum_resistance_bridge"
+    connection:
+      type: "serial"
+      port: "COM3"
+      baudrate: 115200
+    measurement_ranges:
+      current: [1e-12, 1e-9, 1e-6, 1e-3]
+      voltage: [1e-3, 1e-0, 1e3]
+    sampling_rates: [1, 10, 100, 1000]
+```
+
+### Global Settings
+
+- **Data Retention**: Configure how long to keep measurement data
+- **Auto Backup**: Automatic data backup settings
+- **Export Formats**: Supported export file types
+- **AI Analysis**: Enable/disable AI features
 
 ## 🤝 Contributing
 
@@ -198,24 +318,19 @@ We welcome contributions to QuantumMeter Pro! Please follow these steps:
    ```
 7. **Create a Pull Request**
 
-### Development Setup
+### Development Guidelines
 
-For development, install additional dependencies:
+- Follow PEP 8 style guidelines
+- Add type hints to all functions
+- Write comprehensive docstrings
+- Include tests for new functionality
+- Update documentation as needed
 
-```bash
-pip install -r requirements-dev.txt
-```
+For detailed contribution guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **National Laboratories**: For feedback and testing
-- **Universities**: For academic collaboration
-- **Quantum Physics Community**: For technical guidance
-- **Open Source Community**: For the amazing tools and libraries
 
 ## 📞 Support
 
@@ -234,6 +349,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Real-time data visualization
 - AI analysis module
 - Data import/export capabilities
+
+For detailed version history, see [CHANGELOG.md](CHANGELOG.md).
 
 ---
 
