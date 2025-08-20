@@ -47,7 +47,7 @@ QuantumMeter Pro is a comprehensive laboratory software solution designed to int
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/quantum-meter-pro.git
+   git clone https://github.com/michaelgermini/quantum-meter-pro.git
    cd quantum-meter-pro
    ```
 
@@ -219,9 +219,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/quantum-meter-pro/issues)
-- **Documentation**: [Wiki](https://github.com/yourusername/quantum-meter-pro/wiki)
-- **Email**: support@quantum-meter-pro.com
+- **Issues**: [GitHub Issues](https://github.com/michaelgermini/quantum-meter-pro/issues)
+- **Documentation**: [Wiki](https://github.com/michaelgermini/quantum-meter-pro/wiki)
+- **Email**: michael@germini.info
+- **GitHub**: [michaelgermini](https://github.com/michaelgermini)
+- **Author**: Michael Germini
 
 ## 🔄 Version History
 

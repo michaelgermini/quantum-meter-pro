@@ -20,12 +20,12 @@ def read_requirements():
 setup(
     name="quantum-meter-pro",
     version="1.0.0",
-    author="QuantumMeter Pro Team",
-    author_email="support@quantum-meter-pro.com",
+    author="Michael Germini",
+    author_email="michael@germini.info",
     description="Advanced Laboratory Software for Quantum Measurement Devices",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/quantum-meter-pro",
+    url="https://github.com/michaelgermini/quantum-meter-pro",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 4 - Beta",
@@ -55,8 +55,8 @@ setup(
     },
     keywords="quantum, measurement, laboratory, physics, science, research",
     project_urls={
-        "Bug Reports": "https://github.com/yourusername/quantum-meter-pro/issues",
-        "Source": "https://github.com/yourusername/quantum-meter-pro",
-        "Documentation": "https://github.com/yourusername/quantum-meter-pro/wiki",
+        "Bug Reports": "https://github.com/michaelgermini/quantum-meter-pro/issues",
+        "Source": "https://github.com/michaelgermini/quantum-meter-pro",
+        "Documentation": "https://github.com/michaelgermini/quantum-meter-pro/wiki",
     },
 )

@@ -9,10 +9,10 @@ description = "Advanced Laboratory Software for Quantum Measurement Devices"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "QuantumMeter Pro Team", email = "support@quantum-meter-pro.com"}
+    {name = "Michael Germini", email = "michael@germini.info"}
 ]
 maintainers = [
-    {name = "QuantumMeter Pro Team", email = "support@quantum-meter-pro.com"}
+    {name = "Michael Germini", email = "michael@germini.info"}
 ]
 keywords = ["quantum", "measurement", "laboratory", "physics", "science", "research"]
 classifiers = [
@@ -68,11 +68,11 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/quantum-meter-pro"
-Documentation = "https://github.com/yourusername/quantum-meter-pro/wiki"
-Repository = "https://github.com/yourusername/quantum-meter-pro.git"
-"Bug Tracker" = "https://github.com/yourusername/quantum-meter-pro/issues"
-"Source Code" = "https://github.com/yourusername/quantum-meter-pro"
+Homepage = "https://github.com/michaelgermini/quantum-meter-pro"
+Documentation = "https://github.com/michaelgermini/quantum-meter-pro/wiki"
+Repository = "https://github.com/michaelgermini/quantum-meter-pro.git"
+"Bug Tracker" = "https://github.com/michaelgermini/quantum-meter-pro/issues"
+"Source Code" = "https://github.com/michaelgermini/quantum-meter-pro"
 
 [project.scripts]
 quantum-meter-pro = "main:main"

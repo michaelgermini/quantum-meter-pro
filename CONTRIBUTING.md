@@ -13,7 +13,7 @@ Thank you for your interest in contributing to QuantumMeter Pro! This document p
 
 1. **Fork the repository**
    ```bash
-   git clone https://github.com/yourusername/quantum-meter-pro.git
+   git clone https://github.com/michaelgermini/quantum-meter-pro.git
    cd quantum-meter-pro
    ```
 
@@ -304,9 +304,9 @@ QuantumMeter Pro/
 
 ## 📞 Getting Help
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/quantum-meter-pro/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/quantum-meter-pro/discussions)
-- **Email**: dev@quantum-meter-pro.com
+- **Issues**: [GitHub Issues](https://github.com/michaelgermini/quantum-meter-pro/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/michaelgermini/quantum-meter-pro/discussions)
+- **Email**: michael@germini.info
 
 ## 🙏 Recognition
 

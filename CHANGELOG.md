@@ -125,9 +125,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Support
 
 For support and questions:
-- **GitHub Issues**: [Report bugs and request features](https://github.com/yourusername/quantum-meter-pro/issues)
-- **Documentation**: [User and developer guides](https://github.com/yourusername/quantum-meter-pro/wiki)
-- **Email**: support@quantum-meter-pro.com
+- **GitHub Issues**: [Report bugs and request features](https://github.com/michaelgermini/quantum-meter-pro/issues)
+- **Documentation**: [User and developer guides](https://github.com/michaelgermini/quantum-meter-pro/wiki)
+- **Email**: michael@germini.info
 
 ---
 
