@@ -1,0 +1,5 @@
+# Minimal Streamlit dependencies for QuantumMeter Pro
+# These are the core dependencies that should work on Streamlit Cloud
+streamlit>=1.28.0
+pandas>=1.3.0
+numpy>=1.21.0

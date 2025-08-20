@@ -11,6 +11,7 @@ This version of QuantumMeter Pro is specifically designed to work on Streamlit C
 
 ### 🛠️ Deployment Steps
 
+#### Option 1: Full Version (with Plotly)
 1. **Fork this repository** to your GitHub account
 2. **Go to Streamlit Cloud** and sign in with your GitHub account
 3. **Click "New app"**
@@ -18,9 +19,25 @@ This version of QuantumMeter Pro is specifically designed to work on Streamlit C
    - **Repository**: Select your forked repository
    - **Branch**: `main`
    - **Main file path**: `streamlit_app.py`
+   - **Requirements file**: `requirements-streamlit.txt`
    - **App URL**: Choose your preferred URL
 
 5. **Click "Deploy"**
+
+#### Option 2: Simplified Version (Maximum Compatibility)
+1. **Fork this repository** to your GitHub account
+2. **Go to Streamlit Cloud** and sign in with your GitHub account
+3. **Click "New app"**
+4. **Configure your app**:
+   - **Repository**: Select your forked repository
+   - **Branch**: `main`
+   - **Main file path**: `streamlit_app_simple.py`
+   - **Requirements file**: `requirements-streamlit-minimal.txt`
+   - **App URL**: Choose your preferred URL
+
+5. **Click "Deploy"**
+
+**💡 Recommendation**: Use Option 2 (Simplified Version) for maximum compatibility and reliability.
 
 ### 📁 Required Files
 
@@ -28,12 +45,14 @@ Make sure these files are in your repository:
 
 ```
 quantum-meter-pro/
-├── streamlit_app.py              # Main Streamlit application
-├── requirements-streamlit.txt    # Python dependencies
+├── streamlit_app.py                    # Full Streamlit application (with Plotly)
+├── streamlit_app_simple.py             # Simplified Streamlit application (recommended)
+├── requirements-streamlit.txt          # Full dependencies
+├── requirements-streamlit-minimal.txt  # Minimal dependencies (recommended)
 ├── .streamlit/
-│   └── config.toml              # Streamlit configuration
+│   └── config.toml                    # Streamlit configuration
 └── data/
-    └── sample_quantum_data.csv  # Sample data
+    └── sample_quantum_data.csv        # Sample data
 ```
 
 ### 🔧 Configuration
@@ -61,12 +80,23 @@ textColor = "#262730"
 
 ### 📊 Features Available in Streamlit Version
 
+#### Full Version (with Plotly)
 - ✅ **Real-time Measurement Display**
 - ✅ **Interactive Charts** (Current, Voltage, Resistance, Temperature)
 - ✅ **AI Analysis Module**
 - ✅ **Data Import/Export**
 - ✅ **Device Control Simulation**
 - ✅ **Responsive Design**
+
+#### Simplified Version (Recommended)
+- ✅ **Real-time Measurement Display**
+- ✅ **Built-in Streamlit Charts** (Current, Voltage, Resistance, Temperature)
+- ✅ **AI Analysis Module**
+- ✅ **Data Import/Export**
+- ✅ **Device Control Simulation**
+- ✅ **Responsive Design**
+- ✅ **Maximum Compatibility**
+- ✅ **No External Dependencies**
 
 ### 🌐 Access Your App
 
