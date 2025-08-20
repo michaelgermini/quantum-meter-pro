@@ -1,5 +1,9 @@
 # QuantumMeter Pro
 
+<div align="center">
+  <img src="../QuantumMeter_Pro.png" alt="QuantumMeter Pro Logo" width="400" height="300">
+</div>
+
 🔬 **Advanced Laboratory Software for Quantum Measurement Devices**
 
 Welcome to QuantumMeter Pro, a comprehensive laboratory software solution designed to interface with and control quantum measurement devices. This software enables national laboratories and universities to standardize their electrical measurements without multiplying devices.

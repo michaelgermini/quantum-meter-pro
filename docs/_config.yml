@@ -15,6 +15,10 @@ github:
 theme: jekyll-theme-cayman
 show_downloads: true
 
+# Logo and branding
+logo: ../QuantumMeter_Pro.png
+favicon: ../QuantumMeter_Pro.png
+
 # Navigation
 nav:
   - title: Home

@@ -1,5 +1,9 @@
 # QuantumMeter Pro 🚀
 
+<div align="center">
+  <img src="QuantumMeter_Pro.png" alt="QuantumMeter Pro Logo" width="400" height="300">
+</div>
+
 **Advanced Laboratory Software for Quantum Measurement Devices**
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
