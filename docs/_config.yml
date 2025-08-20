@@ -2,7 +2,7 @@ title: QuantumMeter Pro
 description: Advanced Laboratory Software for Quantum Measurement Devices
 author: Michael Germini
 email: michael@germini.info
-url: https://michaelgermini.github.io/quantum-meter-pro
+url: https://michaelgermini.github.io
 baseurl: "/quantum-meter-pro"
 
 # GitHub Pages settings
@@ -77,3 +77,13 @@ highlighter: rouge
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
