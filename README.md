@@ -59,6 +59,12 @@ QuantumMeter Pro is a comprehensive laboratory software solution designed to int
 - **Measurement Control**: Start/stop measurements
 - **API Endpoints**: RESTful API for integration
 
+### 📊 Data Interface
+<div align="center">
+  <img src="data_table.png" alt="QuantumMeter Pro Data Table Interface" width="600" height="400">
+  <p><em>Real-time data table showing current, voltage, resistance, and temperature measurements</em></p>
+</div>
+
 ## 🔬 Technical Specifications
 
 ### Measurement Precision
@@ -239,6 +245,11 @@ pip install -r requirements-dev.txt
    - View statistical analysis of measurements
    - Check for anomalies and quality scores
    - Monitor measurement stability
+
+<div align="center">
+  <img src="data_table.png" alt="QuantumMeter Pro Web Dashboard Interface" width="700" height="500">
+  <p><em>Web dashboard showing real-time data visualization and control interface</em></p>
+</div>
 
 ## 📁 Project Structure
 
