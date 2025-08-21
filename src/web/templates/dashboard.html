@@ -274,6 +274,34 @@
             overflow-y: auto;
         }
 
+        .data-table-panel {
+            margin-bottom: 20px;
+        }
+
+        .data-table-image {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .image-caption {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .image-caption p {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+
+        .image-caption p:first-child {
+            font-weight: bold;
+            color: #4CAF50;
+            font-size: 1.1em;
+        }
+
         @media (max-width: 768px) {
             .dashboard-grid {
                 grid-template-columns: 1fr;
@@ -433,6 +461,19 @@
                     <div class="info-section">
                         <h4>🎯 Quantum Precision</h4>
                         <p>These measurements achieve a relative precision of 1e-8 (0.01 ppm), necessary for quantum resistance standards based on the quantum Hall effect.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-table-panel">
+            <div class="info-card">
+                <h3>📊 Data Table Visualization</h3>
+                <div class="data-table-image">
+                    <img src="../QuantumMeter_Pro.png" alt="QuantumMeter Pro Data Table" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                    <div class="image-caption">
+                        <p><strong>QuantumMeter Pro Data Interface</strong></p>
+                        <p>Real-time measurement data displayed in an organized table format, showing current, voltage, resistance, and temperature values with timestamps.</p>
                     </div>
                 </div>
             </div>
